@@ -1,0 +1,28 @@
+services:
+  
+  hotels:
+    image: roquecastro/hotels:latest
+    mem_limit: 800m
+    ports: 
+    - "8081:8081"
+    networks:
+      - roque-network
+      
+  rooms:
+    image: roquecastro/rooms:latest
+    mem_limit: 800m
+    ports: 
+    - "8082:8081"
+    networks:
+      - roque-network
+      
+  reservations:
+    image: roquecastro/reservations:latest
+    mem_limit: 800m
+    ports: 
+    - "8083:8081"
+    networks:
+      - roque-network
+   
+networks:
+  roque-network:   
