@@ -1,0 +1,69 @@
+services:
+ 
+  configserver:
+    image: roquecastro/configserver:latest
+    mem_limit: 800m
+    ports: 
+    - "8085:8085"
+    networks:
+      - roque-network
+  
+  hotels:
+    image: roquecastro/hotels:latest
+    mem_limit: 800m
+    ports: 
+    - "8081:8081"
+    networks:
+      - roque-network
+    depends_on:
+      - configserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 0
+        window: 120s
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8085/
+    
+  rooms:
+    image: roquecastro/rooms:latest
+    mem_limit: 800m
+    ports: 
+    - "8082:8081"
+    networks:
+      - roque-network
+    depends_on:
+      - configserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 0
+        window: 120s
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8085/
+      
+  reservations:
+    image: roquecastro/reservations:latest
+    mem_limit: 800m
+    ports: 
+    - "8083:8081"
+    networks:
+      - roque-network
+    depends_on:
+      - configserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 0
+        window: 120s
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8085/
+   
+networks:
+  roque-network:
