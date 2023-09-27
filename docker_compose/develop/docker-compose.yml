@@ -7,6 +7,25 @@ services:
     - "8085:8085"
     networks:
       - roque-network
+      
+  eurekaserver:
+    image: roquecastro/eurekaserver:latest
+    mem_limit: 800m
+    ports:
+    - "8065:8065"
+    networks:
+      - roque-network
+    depends_on:
+      - configserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8085/
   
   hotels:
     image: roquecastro/hotels:latest
@@ -17,6 +36,7 @@ services:
       - roque-network
     depends_on:
       - configserver
+      - eurekaserver
     deploy:
       restart_policy:
         condition: on-failure
@@ -26,6 +46,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: dev
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8085/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8065/eureka/
     
   rooms:
     image: roquecastro/rooms:latest
@@ -36,6 +57,7 @@ services:
       - roque-network
     depends_on:
       - configserver
+      - eurekaserver
     deploy:
       restart_policy:
         condition: on-failure
@@ -45,6 +67,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: dev
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8085/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8065/eureka/
       
   reservations:
     image: roquecastro/reservations:latest
@@ -55,6 +78,7 @@ services:
       - roque-network
     depends_on:
       - configserver
+      - eurekaserver
     deploy:
       restart_policy:
         condition: on-failure
@@ -64,6 +88,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: dev
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8085/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8065/eureka/
    
 networks:
   roque-network:
