@@ -14,3 +14,25 @@ INSERT INTO `reservation` (`room_id`, `start_dt`, `finish_dt`)
 INSERT INTO `reservation` (`room_id`, `start_dt`, `finish_dt`)
  VALUES ( 1, '2023-05-01', '2023-05-04');
  
+ INSERT INTO `reservation` (`room_id`, `start_dt`, `finish_dt`)
+ VALUES ( 2, '2023-05-01', '2023-05-04');
+ INSERT INTO `reservation` (`room_id`, `start_dt`, `finish_dt`)
+ VALUES ( 2, '2023-05-01', '2023-05-04');
+ INSERT INTO `reservation` (`room_id`, `start_dt`, `finish_dt`)
+ VALUES ( 2, '2023-05-01', '2023-05-04');
+ INSERT INTO `reservation` (`room_id`, `start_dt`, `finish_dt`)
+ VALUES ( 2, '2023-05-01', '2023-05-04');
+ INSERT INTO `reservation` (`room_id`, `start_dt`, `finish_dt`)
+ VALUES ( 2, '2023-05-01', '2023-05-04');
+ 
+  INSERT INTO `reservation` (`room_id`, `start_dt`, `finish_dt`)
+ VALUES ( 3, '2023-05-01', '2023-05-04');
+ INSERT INTO `reservation` (`room_id`, `start_dt`, `finish_dt`)
+ VALUES ( 3, '2023-05-01', '2023-05-04');
+ INSERT INTO `reservation` (`room_id`, `start_dt`, `finish_dt`)
+ VALUES ( 4, '2023-05-01', '2023-05-04');
+ INSERT INTO `reservation` (`room_id`, `start_dt`, `finish_dt`)
+ VALUES ( 4, '2023-05-01', '2023-05-04');
+ INSERT INTO `reservation` (`room_id`, `start_dt`, `finish_dt`)
+ VALUES ( 4, '2023-05-01', '2023-05-04');
+ 

@@ -52,7 +52,7 @@ services:
     image: roquecastro/rooms:latest
     mem_limit: 800m
     ports: 
-    - "8082:8081"
+    - "8082:8082"
     networks:
       - roque-network
     depends_on:
@@ -73,7 +73,7 @@ services:
     image: roquecastro/reservations:latest
     mem_limit: 800m
     ports: 
-    - "8083:8081"
+    - "8083:8083"
     networks:
       - roque-network
     depends_on:
@@ -85,6 +85,30 @@ services:
         delay: 5s
         max_attempts: 0
         window: 120s
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8085/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8065/eureka/
+      
+  gatewayserver:
+    image: roquecastro/gatewayserver:latest
+    mem_limit: 800m
+    ports:
+      - "8066:8066"
+    networks:
+      - roque-network
+    depends_on:
+      - configserver
+      - eurekaserver
+      - hotels
+      - rooms
+      - reservations
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 50s
+        max_attempts: 3
+        window: 180s
     environment:
       SPRING_PROFILES_ACTIVE: dev
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8085/
