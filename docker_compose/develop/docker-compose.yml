@@ -1,4 +1,12 @@
 services:
+
+  zipkin:
+    image: openzipkin/zipkin
+    mem_limit: 800m
+    ports:
+      - "9411:9411"
+    networks:
+      - roque-network
  
   configserver:
     image: roquecastro/configserver:latest
@@ -7,6 +15,11 @@ services:
     - "8085:8085"
     networks:
       - roque-network
+    depends_on:
+      - zipkin
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin:9411/api/v2/spans
       
   eurekaserver:
     image: roquecastro/eurekaserver:latest
@@ -26,6 +39,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: dev
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8085/
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin:9411/api/v2/spans
   
   hotels:
     image: roquecastro/hotels:latest
@@ -47,6 +61,7 @@ services:
       SPRING_PROFILES_ACTIVE: dev
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8085/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8065/eureka/
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin:9411/api/v2/spans
     
   rooms:
     image: roquecastro/rooms:latest
@@ -68,6 +83,7 @@ services:
       SPRING_PROFILES_ACTIVE: dev
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8085/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8065/eureka/
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin:9411/api/v2/spans
       
   reservations:
     image: roquecastro/reservations:latest
@@ -89,6 +105,7 @@ services:
       SPRING_PROFILES_ACTIVE: dev
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8085/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8065/eureka/
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin:9411/api/v2/spans
       
   gatewayserver:
     image: roquecastro/gatewayserver:latest
@@ -113,6 +130,7 @@ services:
       SPRING_PROFILES_ACTIVE: dev
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8085/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8065/eureka/
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin:9411/api/v2/spans
    
 networks:
   roque-network:
