@@ -36,6 +36,16 @@ public class ReservationController {
 		logger.info("Inicio del métdodo search");
 		return (List<Reservation>) service.search();
 	}
+
+	/**
+	 * @param roomId
+	 * @return
+	 */
+	@GetMapping("reservations-room-by-id/{roomId}")
+	public List<Reservation> searchReservationRoomById(@PathVariable long roomId){
+		return  service.searchReservationsRoomId(roomId);
+	}
+
 	
 	@GetMapping("reservations-with-rooms/{id}")
 	@Retry(name = "searchReservationWithRoomByIdSupportRetry", fallbackMethod = "searchReservationWithRoomByIdAlternative")

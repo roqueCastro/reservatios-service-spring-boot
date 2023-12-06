@@ -7,6 +7,7 @@ import com.example.reservations.model.ReservationRoom;
 
 public interface IReservationService  {
 	List<Reservation> search();
+	List<Reservation> searchReservationsRoomId(long roomId);
 	List<ReservationRoom> searchReservationWithRoomById(long roomId);
 	List<ReservationRoom> searchReservationWithOutRoomById(long roomId);
 }

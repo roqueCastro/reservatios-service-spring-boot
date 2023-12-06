@@ -15,6 +15,7 @@ import com.google.common.base.Optional;
 
 @Service
 public class ReservationServiceImpl implements IReservationService {
+	
 
 	@Autowired
 	private IReservationDao reservationDao;
@@ -27,6 +28,14 @@ public class ReservationServiceImpl implements IReservationService {
 		// TODO Auto-generated method stub
 		return (List<Reservation>) reservationDao.findAll();
 	}
+
+
+	@Override
+	public List<Reservation> searchReservationsRoomId(long roomId) {
+		List<Reservation> reservations = this.reservationDao.findByRommId(roomId);
+		return reservations;
+	}
+
 
 	@Override
 	public List<ReservationRoom> searchReservationWithRoomById(long roomId) {
@@ -75,5 +84,6 @@ public class ReservationServiceImpl implements IReservationService {
 		
 		return reservationsRooms;
 	}
+
 
 }
